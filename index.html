@@ -1,261 +1,155 @@
-<html>
-	<title></title>
+<!DOCTYPE html>
+<html lang="en">
 <head>
+<!-- This code was modified by gemini.google.com. I asked Gemini to improve my original code
+and it generated this CSS only tooltip method without using JS. -->
+    <meta charset="UTF-8">
+    <meta note="gemini.google.com updated code.">
+    <title>Pure CSS Tooltip System</title>
+    <style>
+        /* 1. Base Table Styling */
+        table {
+            width: 90%;
+            border-collapse: collapse;
+            margin: 20px auto;
+            font-family: sans-serif;
+        }
+        th, td {
+            border: 1px solid #ccc;
+            padding: 12px;
+            text-align: left;
+            position: relative; /* CRITICAL: This anchors the tooltip to the cell */
+        }
+        th { background: #f4f4f4; }
 
-<script src="js/jquery-3.7.1.min.js" type="text/javascript" charset="utf-8"></script>
+        /* 2. The Tooltip Container (Hidden by default) */
+        .tooltip {
+            position: absolute;
+            z-index: 10;
+            left: 50%;
+            bottom: 125%; /* Positions it above the cell */
+            transform: translateX(-50%); /* Centers it horizontally */
 
-<script type="text/javascript">
-			$(document).ready(function(){
-				$(".thetip0").hover(function(){//Hover on the class. This works on all classes in the document.
-					//mouse enters
-						$(".tooltip00").css("display","block");
-				},function(){
-					//mouse leaves
-						$(".tooltip00").css("display","none");
-				});
+            width: 250px;
+            padding: 10px;
+            background-color: #333; /* Dark theme for contrast */
+            color: #fff;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            line-height: 1.4;
 
-				$(".thetip1").hover(function(){//Hover on the class. This works on all classes in the document.
-					//mouse enters
-						$(".tooltip01").css("display","block");
-				},function(){
-					//mouse leaves
-						$(".tooltip01").css("display","none");
-				});
+            /* Smooth Fade Effect */
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            pointer-events: none; /* Prevents the tooltip from blocking clicks */
+        }
 
-				$(".thetip2").hover(function(){//Hover on the class. This works on all classes in the document.
-					//mouse enters
-						$(".tooltip02").css("display","block");
-				},function(){
-					//mouse leaves
-						$(".tooltip02").css("display","none");
-				});
+        /* 3. The "Tail" (Little triangle pointing down) */
+        .tooltip::after {
+            content: "";
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            margin-left: -5px;
+            border-width: 5px;
+            border-style: solid;
+            border-color: #333 transparent transparent transparent;
+        }
 
-				$(".thetip3").hover(function(){//Hover on the class. This works on all classes in the document.
-					//mouse enters
-						$(".tooltip03").css("display","block");
-				},function(){
-					//mouse leaves
-						$(".tooltip03").css("display","none");
-				});
+        /* 4. The Hover Trigger */
+        td:hover .tooltip {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(-50%) translateY(-10px); /* Slight slide up effect */
+        }
 
-				$(document).mousemove(function(event){
-					var mx = event.pageX+15;
-					var my = event.pageY+15;
-					$(".tooltip00").css("left",mx+"px").css("top",my+"px");
-					$(".tooltip01").css("left",mx+"px").css("top",my+"px");
-					$(".tooltip02").css("left",mx+"px").css("top",my+"px");
-					$(".tooltip03").css("left",mx+"px").css("top",my+"px");
-				});
-			});
+        /* 5. Color Variations (Optional) */
+        .tip-alert { background-color: #d32f2f; }
+        .tip-alert::after { border-color: #d32f2f transparent transparent transparent; }
 
-//$("#thetip td").tooltip01();
+        .tip-info { background-color: #1976d2; }
+        .tip-info::after { border-color: #1976d2 transparent transparent transparent; }
 
-//$("#postop td[title]").tooltip00();
-//$("#tester img[title]").tooltip00();
-
-</script>
-
-<style type='text/css'>
-	.thetip0{
-		margin-left:auto;
-		margin-right:auto;
-		margin-top:auto;
-		/*width:250px; */
-		background-color:#ffffff;
-		color:#000000;
-		padding:auto;
-		text-align:left;
-		}
-
-	.thetip1{
-		margin-left:auto;
-		margin-right:auto;
-		margin-top:auto;
-		/*width:250px;*/
-		background-color:#ffffff;
-		color:#000000;
-		padding:auto;
-		text-align:left;
-		}
-
-	.thetip2{
-		margin-left:auto;
-		margin-right:auto;
-		margin-top:auto;
-		/*width:250px;*/
-		background-color:#ffffff;
-		color:#000000;
-		padding:auto;
-		text-align:left;
-		}
-
-	.thetip3{
-		margin-left:auto;
-		margin-right:auto;
-		margin-top:auto;
-		/*width:250px;*/
-		background-color:#ffffff;
-		color:#000000;
-		padding:auto;
-		text-align:center;
-		}
-
-	.tooltip00{
-		position:absolute; /*Allows it to be anywhere on the page without interrupting any other elements on the page.*/
-		z-index:2;
-		width:auto;
-		padding:5px;
-		background-color:#ffff00;
-		border:2px solid #000000;
-		border-radius:15px; //Rounding the corners on the box.
-		-moz-border-radius:15px; /*Firefox*/
-
-		display:none; /*Hide from page so that it will only be shown on hover.*/
-
-		}
-
-	.tooltip01{
-		position:absolute; /*Allows it to be anywhere on the page without interrupting any other elements on the page.*/
-		z-index:2;
-		width:auto;
-		padding:5px;
-		background-color:#ff0000;
-		border:2px solid #000000;
-		border-radius:15px; //Rounding the corners on the box.
-		-moz-border-radius:15px; /*Firefox*/
-
-		display:none; /*Hide from page so that it will only be shown on hover.*/
-
-		}
-
-	.tooltip02{
-		position:absolute; /*Allows it to be anywhere on the page without interrupting any other elements on the page.*/
-		z-index:2;
-		width:auto;
-		padding:5px;
-		background-color:#00ff00;
-		border:2px solid #000000;
-		border-radius:15px; //Rounding the corners on the box.
-		-moz-border-radius:15px; /*Firefox*/
-
-		display:none; /*Hide from page so that it will only be shown on hover.*/
-
-		}
-
-	.tooltip03{
-		position:absolute; /*Allows it to be anywhere on the page without interrupting any other elements on the page.*/
-		z-index:2;
-		width:auto;
-		padding:5px;
-		background-color:#0000ff;
-		border:2px solid #000000;
-		border-radius:15px; //Rounding the corners on the box.
-		-moz-border-radius:15px; /*Firefox*/
-
-		display:none; /*Hide from page so that it will only be shown on hover.*/
-
-		}
-
-	td.thetip0{
-		background-color:#c0c0c0;
-		border:2px solid #e0e0e0;
-	}
-
-	table,td,th
-	{
-		border:1px solid black;
-	}
-
-	table
-	{
-		width:50%;
-		border-collapse:collapse;
-	}
-
-	th
-	{
-		height:50px;
-	}
-
-	#redthis
-	{
-		color:red;
-	}
-
-	</style>
+        .important { color: #ffeb3b; font-weight: bold; }
+    </style>
 </head>
-
 <body>
-<br />
-<div><a href='index1.html'>Toggle</a></div>
-<table border='1' align='left'>
-<caption class='thetip3'><b>Formatted Hover Data Displayed From a Hidden DIV.<br />All code for this page is inline.</b></caption>
-<tr>
-	<th>Header1</th>
-	<th>Header2</th>
-	<th>Header3</th>
-	<th>Header4</th>
-	<th>Header5</th>
-</tr>
-<tr>
-	<td class='thetip0'>Data 1</td>
-	<td>Data 1</td>
-	<td>Data 1</td>
-	<td>Data 1</td>
-	<td class='thetip0'>Data 1</td>
-</tr>
-<tr>
-	<td class='thetip0'>Data 2</td>
-	<td class='thetip2'>Data 2</td>
-	<td>Data 2</td>
-	<td>Data 2</td>
-	<td class='thetip0'>Data 2</td>
-</tr>
-<tr>
-	<td class='thetip0'>Data 3</td>
-	<td>Data 3</td>
-	<td class='thetip2'>Data 3</td>
-	<td>Data 3</td>
-	<td class='thetip0'>Data 3</td>
-	</tr>
-<tr>
-	<td class='thetip0'>Data 4</td>
-	<td>Data 4</td>
-	<td>Data 4</td>
-	<td class='thetip2'>Data 4</td>
-	<td class='thetip0'>Data 4</td>
-	</tr>
-<tr>
-	<td class='thetip2'>Data 5</td>
-	<td class='thetip1'>Data 5</td>
-	<td class='thetip0'>Data 5</td>
-	<td>Data 5</td>
-	<td class='thetip0' id='postop' title='Hello'>Data 5</td>
-</tr>
-</table>
 
-	<div class='tooltip00'>
-		1. RT conducts patient evaluation following <b id='redthis'>Eval & Treat Algorithm</b>.<br />
-		2. Level of Patients Asthma Control and current medications determined by RT.<br />
-		3. If Indicated, follow <b id='redthis'>Aerosolized medication Algorithm</b>.<br />
-		4. Plan constructed for therapy Pre-Op / Post-Op. If poorly controlled, advised or adminster step up in therapy (glucocorticoids).
-	</div>
-	<div class='tooltip01'>
-		1. Refer to surgeon or anesthesia provider about risks and potential orders.<br />
-		2. If recently identified, recommend follow-up for sleep study evaluation.<br />
-		3. If treated, bring CPAP/Bi-PAP from home.
-	</div>
-	<div class='tooltip02'>
-		1.  If not acutely symptomatic, contact referring provider to determine level of awareness.<br />
-		2. Proceed with clearance & notify anesthesia.
-	</div>
-	<div class='tooltip03'>
-		<table border='1'>
-		<tr><th>Header1</th><th>Header2</th><th>Header3</th><th>Header4</th></tr>
-		<tr><td>C1R1</td><td>C2R1</td><td>C3R1</td><td>C4R1</td></tr>
-		<tr><td>C1R2</td><td>C2R2</td><td>C3R2</td><td>C4R2</td></tr>
-		<tr><td>C1R3</td><td>C2R3</td><td>C3R3</td><td>C4R3</td></tr>
-		</table>
-	</div>
+    <h2 style="text-align:center;">Lightweight CSS Tooltips</h2>
+
+    <table><caption><div class="tooltip tip-alert">Testing 123</div></caption>
+        <thead>
+            <tr>
+                <th>Procedure</th>
+                <th>Status</th>
+                <th>Notes (Hover Me)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Asthma Evaluation</td>
+                <td>Pending</td>
+                <td>
+                    Hover for Instructions
+                    <div class="tooltip tip-info">
+                        1. Conduct <span class="important">Eval & Treat</span>.<br>
+                        2. Determine control level.<br>
+                        3. Follow medication algorithm.
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                	Sleep Apnea
+                    <div class="tooltip tip-alert">
+                        Other House<br>
+                        American Home Shield Warranty<br>
+                        WORK ORDER CREATED SUCCESSFULLY<br>
+                        Dispatch# 123456<br>
+                        Contractor: CRISPY AIR & HEATING INC<br>
+                        Contact# 480-290-2700
+                    </div></td>
+                <td>Review</td>
+                <td>
+                    Risk Assessment
+                    <div class="tooltip tip-alert">
+                        Contact surgeon/anesthesia immediately regarding identified risks.
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>Bronchitis</td>
+                <td>Review</td>
+                <td>
+                    Risk Assessment
+                    <div class="tooltip tip-alert">
+                        Contact surgeon/anesthesia immediately regarding identified risks.
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>COPD</td>
+                <td>Review</td>
+                <td>
+                    Risk Assessment
+                    <div class="tooltip tip-alert">
+                        Contact surgeon/anesthesia immediately regarding identified risks.
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>Shortness of Breath</td>
+                <td>Review</td>
+                <td>
+                    Risk Assessment
+                    <div class="tooltip tip-alert">
+                        Contact surgeon/anesthesia immediately regarding identified risks.
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
 </body>
 </html>
